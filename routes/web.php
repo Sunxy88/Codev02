@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/demande', 'UserController@addSession');
+
+Route::post('/newdemande', 'DemandController@createDemande');
