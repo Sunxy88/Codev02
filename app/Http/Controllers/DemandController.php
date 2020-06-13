@@ -29,7 +29,7 @@ class DemandController extends Controller
         $listUsers->demand_id = $demand->id;
         $listUsers->users = $validatedData['listUsers'];
         $listUsers->save();
-        return view('demande');
+        return view('congratualation');
     }
 
     public function manage(Request $requests) {

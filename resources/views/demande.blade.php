@@ -6,7 +6,7 @@
     <title>Create demand</title>
 </head>
 <body>
-<form method="post" action="/newdemande">
+<form name="demand" method="post" action="/newdemande">
     @csrf
     But d'utilisation du Lab : <input type="text" name="obj"><br/>
     Déscription d'environnement : <input type="text" name="env" placeholder="Describe your environment you want"><br/>
