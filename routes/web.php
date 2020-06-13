@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/manage', 'DemandController@manage');
+
+Route::get('/detail/{id}', 'DemandController@detail');
+
 Route::get('/demande', 'UserController@addSession');
 
-Route::post('/newdemande', 'DemandController@createDemande');
+Route::post('/newdemande', 'DemandController@create');

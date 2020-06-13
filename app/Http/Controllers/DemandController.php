@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class DemandController extends Controller
 {
-    public function createDemande(Request $request) {
+    public function create(Request $request) {
         $user_id = $request->session()->get('userid');
         $validatedData = $request -> validate([
             'obj' => ['required', 'max:140'],
@@ -30,5 +30,23 @@ class DemandController extends Controller
         $listUsers->users = $validatedData['listUsers'];
         $listUsers->save();
         return view('demande');
+    }
+
+    public function manage(Request $requests) {
+        $user_id = $requests->session()->get('userid');
+        $demands = Demand::where("user_id", $user_id)
+            ->get()->toArray();
+        $demands = collect($demands);
+        $requests->session()->put('demands', $demands);
+        return view("manage");
+    }
+
+    public function detail(Request $request, $demand_id) {
+        $users = ListUsers::where('demand_id', $demand_id)->get()->toArray();
+        $users = collect($users);
+        $demand = collect(Demand::where("id", $demand_id)->get()->toArray());
+        $request->session()->put('listUsers', $users);
+        $request->session()->put('demand', $demand);
+        return view("detail");
     }
 }
