@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class DemandController extends Controller
 {
     public function create(Request $request) {
-        $user_id = $request->session()->get('userid');
+        $user_id =  self::validateLogInState($request)->id;
         $validatedData = $request -> validate([
             'obj' => ['required', 'max:140'],
             'env' => ['required', 'max:140'],
@@ -33,7 +33,7 @@ class DemandController extends Controller
     }
 
     public function manage(Request $requests) {
-        $user_id = $requests->session()->get('userid');
+        $user_id = self::validateLogInState($requests)->id;
         $demands = Demand::where("user_id", $user_id)
             ->get()->toArray();
         $demands = collect($demands);
@@ -42,11 +42,21 @@ class DemandController extends Controller
     }
 
     public function detail(Request $request, $demand_id) {
+        self::validateLogInState($request);
         $users = ListUsers::where('demand_id', $demand_id)->get()->toArray();
         $users = collect($users);
         $demand = collect(Demand::where("id", $demand_id)->get()->toArray());
         $request->session()->put('listUsers', $users);
         $request->session()->put('demand', $demand);
         return view("detail");
+    }
+
+    public function validateLogInState(Request $request) {
+        $user = $request->session()->get('user', null);
+        if ($user == null) {
+            $request->session()->flash('alert', 'Connectez-vous par ici');
+            return view('login');
+        }
+        return $user;
     }
 }

@@ -1,0 +1,60 @@
+header
+{
+    color: grey;
+}
+body
+{
+    font-family: Arial, sans-serif;
+    line-height: 200%;
+}
+#page
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+#boite
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+#element
+{
+    margin: 100px
+}
+#titre
+{
+    display: flex;
+    justify-content: space-around;
+}
+a
+{
+    border:1px solid white;
+    border-radius: 6px;
+    background-color: grey;
+    padding: 1px;
+    color: white;
+    padding-bottom: 3px;
+    text-decoration: none;
+    display: inline-block;
+}
+a:active, a:focus, a:hover
+{
+    background-color: blue;
+}
+table
+{
+    border-collapse: collapse;
+}
+td, th
+{
+    border: 1px solid grey;
+    text-align: center;
+}
+#inv
+{
+    text-align: center;
+}
