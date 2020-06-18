@@ -1,19 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome</title>
+    <title>Bienvenue</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/login.css') }}"/>
 </head>
+
 <body>
-<h1>Welcome!</h1><br/>
-<p>Don't have an account? <a href="/register">Register now!</a></p>
-<form method="post" action="/login">
-    @csrf
-    Email: <input type="text" name="email" placeholder="Your email address"><br/>
-    Password: <input type="password" name="pwd"><br/>
-    <input type="submit" value="Log In">
-</form>
+<div id="login_frame">
+
+    <p id="image_logo"><img src="{{asset('/image/imta_logo.jpg')}}"></p>
+
+    <form method="POST" action="/login">
+        @csrf
+        <p><label class="label_input">Email</label><input type="text" name="email" class="text_field"/></p>
+        <p><label class="label_input">Password</label><input type="password" name="pwd" class="text_field"/></p>
+
+        <div id="login_control">
+            <input type="submit" id="btn_login" value="Se connecter"/>
+            <a id="forget_pwd" href="/register">S'inscrire</a>
+        </div>
+    </form>
+</div>
 @if(session()->get('alert', null) != null)
     <div class="alert">
         <p>{{session()->get('alert')}}</p>

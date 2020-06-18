@@ -9,7 +9,8 @@
 <body>
 <header id="titre">
     <img src="{{asset('/image/imta_logo.jpg')}}" alt="Logo IMT Atlantique" />
-    <h2>Gestion des labs informatiques d'IMT Atlantique</h2>
+    <h2>Gestion des labs informatiques d'IMT Atlantique</h2><br/>
+    <a href="logout">Déconnecter</a>
 </header>
 <div id="page">
     <h1>Gestionnaire de demandes</h1>
@@ -19,6 +20,7 @@
                 <th>Id</th>
                 <th>Description de l'environnement</th>
                 <th>Nombre d'utilisateurs</th>
+                <th>Liste d'utilisateur</th>
                 <th>De</th>
                 <th>À</th>
                 <th>Manipulation</th>
@@ -29,10 +31,10 @@
                         <td>{!! $demand['id'] !!}</td>
                         <td>{!! $demand['description'] !!}</td>
                         <td>{!! $demand['numberUsers'] !!}</td>
+                        <td>{!! $demand['listUsers'] !!}</td>
                         <td>{!! $demand['fromDate'] !!}</td>
                         <td>{!! $demand['toDate'] !!}</td>
                         <td>
-                            <a href="/detail/{{$demand['id']}}">Détails</a></br>
                             <a href="/modify/{{$demand['id']}}">Modifier</a></br>
                             <a href="/confirm/{{$demand['id']}}">Supprimer</a>
                         </td>

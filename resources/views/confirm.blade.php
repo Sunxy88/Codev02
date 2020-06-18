@@ -4,26 +4,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('/css/demande.css') }}" />
-    <title>Demande détaillée</title>
+    <title>Gestionnaire de demande</title>
 </head>
 <body>
 <header id="titre">
     <img src="{{asset('/image/imta_logo.jpg')}}" alt="Logo IMT Atlantique" />
-    <h2>Gestion des labs informatiques d'IMT Atlantique</h2>
+    <h2>Gestion des labs informatiques d'IMT Atlantique</h2><br/>
+    <a href="logout">Déconnecter</a>
 </header>
 <div id="page">
-    <h1>Demande détaillée</h1>
+    <h1>Vous êtes sûr que vous voulez supprimer la demande suivante?</h1>
     <div id="boite">
         <table border="1">
             <tr>
                 <th>Id</th>
-                <th>Description d'environnement</th>
-                <th>Nombre d'utilisateur</th>
+                <th>Description de l'environnement</th>
+                <th>Nombre d'utilisateurs</th>
                 <th>De</th>
                 <th>À</th>
             </tr>
-            @if(session()->get("demand", null) != null)
-                @foreach(session()->get('demand') as $demand)
+            @if(session()->get("demandsToBeDeleted", null) != null)
+                @foreach(session()->get('demandsToBeDeleted') as $demand)
                     <tr>
                         <td>{!! $demand['id'] !!}</td>
                         <td>{!! $demand['description'] !!}</td>
@@ -35,19 +36,9 @@
             @endif
         </table>
     </div>
-    <div id="boite">
-        <table border="1">
-            <tr>
-                <th>Liste d'utilisateur</th>
-            </tr>
-            @if(($users = session()->get("listUsers", null)) != null)
-                @foreach($users as $user)
-                    <tr>
-                        <td>{!! $user['users'] !!}</td>
-                    </tr>
-                @endforeach
-            @endif
-        </table>
-    </div>
+    <form method="GET" action="/confirmedDelete">
+        <input type="submit" value="Oui, je veux la supprimer.">
+    </form>
+</div>
 </body>
 </html>
