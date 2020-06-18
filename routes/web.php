@@ -31,6 +31,10 @@ Route::get('/confirm/{id}', 'DemandController@confirmDelete');
 
 Route::get('/confirmedDelete', 'DemandController@doDelete');
 
+Route::get('/modify/{id}', 'DemandController@fillModification');
+
+Route::post('/modify', 'DemandController@modify');
+
 Route::get('/demande', function () {
     return view('demande');
 });
