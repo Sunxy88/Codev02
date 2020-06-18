@@ -18,9 +18,9 @@ class CreateDemandsTable extends Migration
             $table->unsignedBigInteger("user_id");
             $table->string("description");
             $table->integer("numberUsers");
+            $table->string('listUsers');
             $table->date("fromDate");
             $table->date("toDate");
-            $table -> foreign('user_id')->references('id')->on('users');
         });
     }
 

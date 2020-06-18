@@ -19,16 +19,13 @@ class DemandController extends Controller
             'to' => ['required', 'date'],
         ]);
         $demand = new Demand;
-        $listUsers = new ListUsers;
         $demand->user_id = $user_id;
         $demand->description = $validatedData['env'];
         $demand->numberUsers = $validatedData['numberUsers'];
+        $demand->listUsers = $validatedData['listUsers'];
         $demand->fromDate = $validatedData['from'];
         $demand->toDate = $validatedData['to'];
         $demand->save();
-        $listUsers->demand_id = $demand->id;
-        $listUsers->users = $validatedData['listUsers'];
-        $listUsers->save();
         return view('congratualation');
     }
 
@@ -41,17 +38,32 @@ class DemandController extends Controller
         return view("manage");
     }
 
-    public function detail(Request $request, $demand_id) {
-        self::validateLogInState($request);
-        $users = ListUsers::where('demand_id', $demand_id)->get()->toArray();
-        $users = collect($users);
-        $demand = collect(Demand::where("id", $demand_id)->get()->toArray());
-        $request->session()->put('listUsers', $users);
-        $request->session()->put('demand', $demand);
-        return view("detail");
+    public function confirmDelete(Request $request, $id)
+    {
+        $demands = $request->session()->get('demands', null);
+        if ($demands == null)
+            return view('manage');
+        $demands = $demands->toArray();
+        $toBeDeleted = array();
+        foreach ($demands as $demand) {
+            if ($demand['id'] == $id)
+                $toBeDeleted = array_merge($toBeDeleted, array($demand));
+        }
+        $request->session()->put('demandsToBeDeleted', collect($toBeDeleted));
+        return view("confirm");
     }
 
-    public function validateLogInState(Request $request) {
+    public function doDelete(Request $request) {
+        $toBeDeleted = $request->session()->get('demandsToBeDeleted')->toArray();
+        $primaryKeyToDelete = array();
+        foreach ($toBeDeleted as $item) {
+            array_push($primaryKeyToDelete, $item['id']);
+        }
+        Demand::destroy($primaryKeyToDelete);
+        return view('congratualation');
+    }
+
+    public static function validateLogInState(Request $request) {
         $user = $request->session()->get('user', null);
         if ($user == null) {
             $request->session()->flash('alert', 'Connectez-vous par ici');

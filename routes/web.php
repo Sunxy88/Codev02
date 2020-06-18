@@ -13,16 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
+Route::get('/', 'UserController@home');
+
+Route::get('/register', function () {
+    return view('register');
 });
+
+Route::post('/register', 'UserController@register');
 
 Route::post('/login', 'UserController@login');
 
+Route::get('/logout', 'UserController@logout');
+
 Route::get('/manage', 'DemandController@manage');
 
-Route::get('/detail/{id}', 'DemandController@detail');
+Route::get('/confirm/{id}', 'DemandController@confirmDelete');
 
-Route::get('/demande', 'UserController@addSession');
+Route::get('/confirmedDelete', 'DemandController@doDelete');
+
+Route::get('/demande', function () {
+    return view('demande');
+});
 
 Route::post('/newdemande', 'DemandController@create');
